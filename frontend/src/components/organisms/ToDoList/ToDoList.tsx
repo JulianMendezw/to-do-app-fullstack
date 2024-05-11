@@ -9,6 +9,7 @@ import { MdRadioButtonUnchecked } from "react-icons/md";
 import { TbCircleCheckFilled } from "react-icons/tb";
 import { TiTimes } from "react-icons/ti";
 import { TiPlus } from "react-icons/ti";
+import { MdOutlineLogin } from "react-icons/md";
 
 
 type Todo = {
@@ -73,10 +74,19 @@ export const ToDoList: React.FC = () => {
         setTask(tasks.filter((task) => task.id !== id));
     };
 
+    // Function to log out
+    const logOut = () => {
+        localStorage.setItem("Authorization", "false")
+        window.location.reload();
+    }
+
     return (
 
         <div className='to-app-list'>
-            <h1>Tasks</h1>
+            <div className="header-section">
+                <h1>Tasks</h1>
+                <button className='logout' type='button' onClick={() => logOut()}><MdOutlineLogin /></button>
+            </div>
             <form onSubmit={(event: any) => handleSubmit(event)}>
 
                 {/* add new task  section */}
@@ -108,3 +118,4 @@ export const ToDoList: React.FC = () => {
     )
 }
 
+export default ToDoList;

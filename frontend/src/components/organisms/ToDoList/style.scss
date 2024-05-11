@@ -5,6 +5,35 @@
     text-align: left;
     flex-direction: column;
 
+    button,
+    button:active,
+    button:focus {
+        border: 0;
+        margin: 0;
+        outline: 0;
+        padding: 0;
+        cursor: pointer;
+        background: none;
+    }
+
+    .header-section {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        .logout {
+            width: 60px;
+            height: 40px;
+            border: none;
+            color: brown;
+            font-size: 20px;
+            padding-top: 8px;
+            border-radius: 10px;
+            background: transparent;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+        }
+    }
+
     .add-section {
         width: 100%;
         display: flex;
@@ -65,9 +94,4 @@
         }
 
     }
-
-
-
-
-
 }
