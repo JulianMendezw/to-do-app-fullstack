@@ -156,25 +156,3 @@ def create_user(user: User):
 @app.get("/user")
 def get_user(user: User = Depends(get_current_user)):
     return user
-
-
-# logging
-@app.post("/login")
-async def login(token: Annotated[str, Depends(oauth2_scheme)]):
-    try:
-        # Convert email to lowercase
-        user_email = user.email.lower()
-
-        # Check if user already exists
-        if user_exists(value=user_email):
-            user_from_db = (
-                supabase.from_("users").select("*").eq("email", user_email).execute()
-            )
-            if user_from_db.data[0]["password"] == user.password:
-                return {"message": "User Authenticated"}
-            else:
-                raise HTTPException(status_code=404, detail="email or password error")
-
-    except Exception as e:
-        print("Error: ", e)
-        return {"message": "User authentication failed"}
