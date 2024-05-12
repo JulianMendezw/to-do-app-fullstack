@@ -8,8 +8,8 @@ En el directorio raiz se encuentra el directorio api el cual contine la Backend 
 
 usuario de prueba:
 
-email: string@email.com
-contraseña: 1234
+username: string
+contraseña: string
 
 ### para levantar el front:
 Antes de ejecutar estos comandos debe instalar Node v20.10.0
