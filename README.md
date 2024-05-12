@@ -48,15 +48,15 @@ fastapi dev app/main.py
 
 ### Ejemplos de la app
 
-##Interfaz principal
+## Interfaz principal
 ![image](https://github.com/JulianMendezw/to-do-app-fullstack/assets/7661539/40cf7de9-f0e0-4474-a7f6-df5ad5b8b60d)
 
 
-##Login
+## Login
 ![image](https://github.com/JulianMendezw/to-do-app-fullstack/assets/7661539/49cbd3dc-d1b5-41af-b4b1-6b40e0608a62)
 
 
-##Mensaje de error
+## Mensaje de error
 
 ![image](https://github.com/JulianMendezw/to-do-app-fullstack/assets/7661539/d92e60ce-8e59-418e-a6c3-34349aae2c09)
 
