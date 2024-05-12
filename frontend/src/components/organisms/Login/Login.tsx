@@ -11,30 +11,34 @@ export const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [formError, setFormError] = useState(false)
+  const [textError, setTextError] = useState('')
+
+  const getData = async () => {
+    try {
+      const headers = { "Content-Type": "application/x-www-form-urlencoded" }
+      const payload = {
+        "username": email, "password": password,
+      }
+
+      const response = await axios.post(
+        `http://127.0.0.1:8000/token`,
+        payload,
+        { headers }
+      );
+      localStorage.setItem("Authorization", "true")
+      navigate("/");
+
+    } catch (error: any) {
+      console.log(error)
+      localStorage.setItem("Authorization", "false")
+      setTextError(error.response.data.detail)
+      setFormError(true)
+    }
+  };
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const payload_api = {
-      "email": email,
-      "password": password,
-    }
-    axios.post("http://127.0.0.1:8000/login", payload_api)
-      .then(function (response) {
-        if (response.data.message.includes('Authenticated')) {
-          console.log('logging success!')
-          setFormError(false)
-          localStorage.setItem("Authorization", "true")
-          navigate("/");
-
-        } else {
-          localStorage.setItem("Authorization", "false")
-          setFormError(true)
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    getData()
   }
 
   return (
@@ -42,10 +46,10 @@ export const Login = () => {
       <h1>Welcome</h1>
       <p></p>
       <form onSubmit={(event) => handleSubmit(event)} className='logging-input'>
-        <input type="email"
+        <input type="text"
           onChange={(e) => setEmail(e.target.value)}
           value={email}
-          placeholder='Email'
+          placeholder='User'
         />
         <input type="password"
           value={password}
@@ -53,7 +57,7 @@ export const Login = () => {
           placeholder='Password'
         />
 
-        {formError && <p>verifica tu email o contraseña</p>}
+        {formError && <p>{textError}</p>}
         <button type='submit' className='button-submit'>Log in</button>
       </form>
     </div>
