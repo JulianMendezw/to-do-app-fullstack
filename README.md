@@ -1,4 +1,4 @@
-![chrome_K6ExSqL4Wc](https://github.com/JulianMendezw/to-do-app/assets/7661539/663d8b78-2ee5-4525-8999-162f71632ee5)
+![image](https://github.com/JulianMendezw/to-do-app-fullstack/assets/7661539/40cf7de9-f0e0-4474-a7f6-df5ad5b8b60d)
 
 El proyecto se desarrollo con react para el frontend, python para el backend y como base de datos supabase.
 
@@ -49,10 +49,14 @@ fastapi dev app/main.py
 ### Ejemplos de la app
 
 ##Interfaz principal
-![explorer_XELB8GJgA7](https://github.com/JulianMendezw/fundacion_app/assets/7661539/9b951768-606a-4206-8dbf-d14f38ed30da)
+![image](https://github.com/JulianMendezw/to-do-app-fullstack/assets/7661539/40cf7de9-f0e0-4474-a7f6-df5ad5b8b60d)
+
+
+##Login
+![image](https://github.com/JulianMendezw/to-do-app-fullstack/assets/7661539/49cbd3dc-d1b5-41af-b4b1-6b40e0608a62)
 
 
 ##Mensaje de error
 
-![chrome_5EM3tCvwzh](https://github.com/JulianMendezw/fundacion_app/assets/7661539/445d55a5-4112-4d25-964e-566b1d94a29c)
+![image](https://github.com/JulianMendezw/to-do-app-fullstack/assets/7661539/d92e60ce-8e59-418e-a6c3-34349aae2c09)
 
