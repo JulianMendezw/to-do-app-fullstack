@@ -85,3 +85,31 @@ def delete_task(task_id: int, token: str = Depends(get_current_user)):
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
         )
+
+
+# Update task completion status
+@router.put("/update_task/{task_id}")
+def update_task(task_id: int, completed: bool, token: str = Depends(get_current_user)):
+    try:
+        # Update the completion status of the task with the given task_id
+        updated_task = (
+            supabase.from_("tasks")
+            .update({"completed": completed})
+            .eq("id", task_id)
+            .eq("user_id", token["sub"])
+            .execute()
+        )
+
+        if len(updated_task.data) == 0:
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="Task not found"
+            )
+        return {"message": "Task completion status updated successfully"}
+
+    except HTTPException as e:
+        raise e
+
+    except Exception as e:
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
+        )
