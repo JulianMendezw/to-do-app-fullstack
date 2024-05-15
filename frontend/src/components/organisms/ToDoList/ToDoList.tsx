@@ -11,7 +11,8 @@ import { TiTimes } from "react-icons/ti";
 import { TiPlus } from "react-icons/ti";
 import { MdOutlineLogin } from "react-icons/md";
 
-import { GetTask, CreateTask } from '../../../utils/task_api';
+// API
+import { GetTask, CreateTask, DeleteTask } from '../../../utils/task_api';
 
 type Todo = {
     id: number;
@@ -59,8 +60,10 @@ export const ToDoList: React.FC = () => {
     };
 
     // Function to deleted a task from the list
-    const handleDelete = (id: number) => {
-        setTask(tasks.filter((task) => task.id !== id));
+    const handleDelete = async (id: number) => {
+        const taskDeleted = await DeleteTask(localStorage.getItem('token'), id);
+        if (taskDeleted.message.includes("successfully"))
+            setTask(tasks.filter((task) => task.id !== id));
     };
 
     // Function to log out

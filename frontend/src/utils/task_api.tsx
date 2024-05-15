@@ -36,10 +36,14 @@ export const CreateTask = async (token: any, taskData: any) => {
 }
 
 
-export const deleteTask = async (task_id: number) => {
+export const DeleteTask = async (token: any, task_id: number) => {
   try {
-    const headers = { "Content-Type": "application/x-www-form-urlencoded" };
-    const response = await axios.delete(`${BASE_URL}/tasks/${task_id}`, { headers });
+    const headers = {
+      'Authorization': 'Bearer ' + token,
+      'accept': 'application/json',
+    }
+
+    const response = await axios.delete(`${BASE_URL}/delete_task/${task_id}`, { headers });
     return response.data;
   } catch (error) {
     console.error('Error deleting task:', error);
