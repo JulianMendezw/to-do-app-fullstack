@@ -56,7 +56,7 @@ def create_task(token: str = Depends(get_current_user), task_details: Task = Non
 def delete_task(task_id: int, token: str = Depends(get_current_user)):
     try:
         # Delete the task with the given task_id
-        tas_deleted = (
+        deleted_task = (
             supabase.from_("tasks")
             .delete()
             .eq("id", task_id)
@@ -64,7 +64,7 @@ def delete_task(task_id: int, token: str = Depends(get_current_user)):
             .execute()
         )
 
-        if len(tas_deleted.data) == 0:
+        if len(deleted_task.data) == 0:
             raise HTTPException(
                 status_code=status.HTTP_404_NOT_FOUND, detail="Task not found"
             )
