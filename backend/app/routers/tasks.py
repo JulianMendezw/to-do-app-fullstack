@@ -35,20 +35,28 @@ def create_task(token: str = Depends(get_current_user), task_details: Task = Non
             status_code=status.HTTP_400_BAD_REQUEST, detail="Task details are required"
         )
     try:
-        supabase.from_("tasks").insert(
-            {
-                "user_id": token["sub"],
-                "text": task_details.text,
-                "completed": task_details.completed,
-            }
-        ).execute()
+        task_created = (
+            supabase.from_("tasks")
+            .insert(
+                {
+                    "user_id": token["sub"],
+                    "text": task_details.text,
+                    "completed": task_details.completed,
+                }
+            )
+            .execute()
+        )
+
     except HTTPException as e:
         raise e
     except Exception as e:
         raise HTTPException(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=str(e)
         )
-    return {"message": "Task created successfully"}
+    return {
+        "message": "Task created successfully",
+        "task_id": task_created.data[0]["id"],
+    }
 
 
 # Delete task
