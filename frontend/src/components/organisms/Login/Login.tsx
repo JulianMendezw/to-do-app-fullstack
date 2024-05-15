@@ -21,11 +21,11 @@ export const Login = () => {
       }
 
       const response = await axios.post(
-        `http://127.0.0.1:8000/token`,
+        `http://127.0.0.1:8000/login`,
         payload,
         { headers }
       );
-      localStorage.setItem("Authorization", "true")
+      localStorage.setItem("token", response.data.access_token)
       navigate("/");
 
     } catch (error: any) {
