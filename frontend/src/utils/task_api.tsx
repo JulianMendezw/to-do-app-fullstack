@@ -21,8 +21,6 @@ export const GetTask = async (token: any) => {
 export const CreateTask = async (token: any, taskData: any) => {
   try {
 
-    console.log(taskData)
-
     const headers = {
       'Authorization': 'Bearer ' + token,
       'accept': 'application/json',
@@ -47,6 +45,30 @@ export const DeleteTask = async (token: any, task_id: number) => {
     return response.data;
   } catch (error) {
     console.error('Error deleting task:', error);
+    return null;
+  }
+}
+
+
+export const UpdateTask = async (token: any, task_id: number, completed: boolean = true) => {
+
+  try {
+    const myHeaders = new Headers();
+    myHeaders.append("accept", "application/json");
+    myHeaders.append("Authorization", "Bearer " + token);
+
+    const requestOptions: any = {
+      method: "PUT",
+      headers: myHeaders,
+      redirect: "follow"
+    };
+
+    fetch(`${BASE_URL}/update_task/${task_id}?completed=${completed}`, requestOptions)
+      .then((response) => response.text())
+      .then((result) => console.log(result))
+      .catch((error) => console.error(error));
+  } catch (error) {
+    console.error('Error updating task:', error);
     return null;
   }
 }

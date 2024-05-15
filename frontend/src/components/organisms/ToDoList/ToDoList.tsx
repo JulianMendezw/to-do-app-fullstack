@@ -12,7 +12,7 @@ import { TiPlus } from "react-icons/ti";
 import { MdOutlineLogin } from "react-icons/md";
 
 // API
-import { GetTask, CreateTask, DeleteTask } from '../../../utils/task_api';
+import { GetTask, CreateTask, DeleteTask, UpdateTask } from '../../../utils/task_api';
 
 type Todo = {
     id: number;
@@ -51,7 +51,8 @@ export const ToDoList: React.FC = () => {
     };
 
     // Function to mark a task as complete
-    const handleComplete = (id: number) => {
+    const handleComplete = (id: number, completed: boolean,) => {
+        const taskUpdated = UpdateTask(localStorage.getItem('token'), id, completed);
         setTask(
             tasks.map((task) =>
                 task.id === id ? { ...task, completed: !task.completed } : task
@@ -108,7 +109,7 @@ export const ToDoList: React.FC = () => {
                 {tasks.map((task, index) => (
                     <li className='task-element' key={index}>
                         <p>{task.text}</p>
-                        <button className='check-button' onClick={() => handleComplete(task.id)}>
+                        <button className='check-button' onClick={() => handleComplete(task.id, !task.completed)}>
                             {task.completed ? <TbCircleCheckFilled /> : <MdRadioButtonUnchecked />}
                         </button>
                         <button className='delete-button' onClick={() => handleDelete(task.id)}><TiTimes /></button>
