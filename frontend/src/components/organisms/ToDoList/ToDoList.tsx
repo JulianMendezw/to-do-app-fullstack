@@ -1,5 +1,5 @@
 // Hooks
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // Styles
 import './style.scss'
@@ -11,6 +11,7 @@ import { TiTimes } from "react-icons/ti";
 import { TiPlus } from "react-icons/ti";
 import { MdOutlineLogin } from "react-icons/md";
 
+import { GetTask, CreateTask } from '../../../utils/task_api';
 
 type Todo = {
     id: number;
@@ -18,27 +19,11 @@ type Todo = {
     completed: boolean;
 };
 
-const defaultTask = [{
-    id: 1,
-    text: "New feature dark mode",
-    completed: false,
-},
-{
-    id: 2,
-    text: "Deploy Frontend",
-    completed: true,
-},
-{
-    id: 3,
-    text: "Integration to master",
-    completed: false,
-},
-]
 
 export const ToDoList: React.FC = () => {
 
     // State to store task list
-    const [tasks, setTask] = useState<Todo[]>(defaultTask);
+    const [tasks, setTask] = useState<Todo[]>([]);
 
     // State to store the new task
     const [newTask, setNewTask] = useState<string>('');
@@ -49,13 +34,17 @@ export const ToDoList: React.FC = () => {
     };
 
     // Function to add a task to the list
-    const handleSubmit = (event: any) => {
+    const handleSubmit = async (event: any) => {
         event.preventDefault();
+
+        // Check if the new task is not empty
         if (newTask.trim() !== '') {
-            const newId = tasks.length > 0 ? tasks[tasks.length - 1].id + 1 : 1;
-            // Add new task to the list
-            setTask([...tasks, { id: newId, text: newTask.trim(), completed: false }]);
-            // Clear input of the new task
+            const payload = {
+                "text": newTask.trim(),
+                "completed": false
+            };
+            const taskCreated = await CreateTask(localStorage.getItem('token'), payload)
+            setTask([...tasks, { id: taskCreated.task_id, text: newTask.trim(), completed: false }]);
             setNewTask('');
         }
     };
@@ -76,9 +65,18 @@ export const ToDoList: React.FC = () => {
 
     // Function to log out
     const logOut = () => {
-        localStorage.setItem("Authorization", "false")
+        localStorage.removeItem("token")
         window.location.reload();
     }
+
+    const getTaskData = async () => {
+        const taskData = await GetTask(localStorage.getItem('token'))
+        setTask(taskData.data)
+    }
+
+    useEffect(() => {
+        getTaskData()
+    }, []);
 
     return (
 
@@ -103,7 +101,7 @@ export const ToDoList: React.FC = () => {
             </form>
 
             {/* task list */}
-            {tasks.length >= 1 && <ul className='task-list'>
+            {tasks.length > 0 && <ul className='task-list'>
                 {tasks.map((task, index) => (
                     <li className='task-element' key={index}>
                         <p>{task.text}</p>
@@ -114,7 +112,7 @@ export const ToDoList: React.FC = () => {
                     </li>
                 ))}
             </ul>}
-        </div>
+        </div >
     )
 }
 
